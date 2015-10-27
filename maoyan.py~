@@ -44,9 +44,10 @@ def main():
 				url = 'http://piaofang.maoyan.com/history/date/box.json?date='+str(i)+'&cnt=10'
 				html = urllib2.urlopen(url,timeout = 5).read()
 				#print html
+				start = clock()
 				dataprocess(html)
 				time.sleep(0.5)
-				print i
+				print str(i) + str(start)
 			except Exception,e:
 				timeremain.append(i)
 				continue
