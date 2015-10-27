@@ -3,28 +3,17 @@
 
 
 import urllib
-import urllib2
-import re
-import MySQLdb
-from bs4 import BeautifulSoup
+import csv
+import datetime
 import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-conn = MySQLdb.connect(
-        host = 'localhost',
-        port = 3306,
-        user = 'root',
-        passwd = 'root',
-        db = 'test1'
-        )
-cur = conn.cursor()
-
-def insert(info):
-    cur.execute("insert into movie3 values(%s,%s,%s,%s,%s)",info)
-
+class Spider():
+	def __init__(self,date = '2015-10-25'):
+		self.url = 'http://piaofang.maoyan.com/history/date/box.json?date='+date+'&cnt=10'
+		self.rowName = []
 def get_info(content):
-    soup = BeautifulSoup(content)
     rank = soup.find('span','top250-no').get_text().split('.')[1]
     name = soup.find('span',property="v:itemreviewed").get_text()
     year = soup.find('span','year').get_text()[1:5].encode('utf8')
